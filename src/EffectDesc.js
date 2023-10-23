@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { ThemeProvider } from "./Themecontent";
+import ThemeDisplay from "./ThemeDisplay";
+import ThemeButton from "./ThemeButton";
 
 function EffectDesc() {
   const [resourceType, setResourceType] = useState("posts");
@@ -18,6 +21,16 @@ function EffectDesc() {
       {items.map((item) => {
         return <pre>{JSON.stringify(item)}</pre>;
       })}
+      <div>
+        <ThemeProvider>
+          <div>
+            <h1> Theme Switcher</h1>
+            <ThemeButton />
+
+            <ThemeDisplay />
+          </div>
+        </ThemeProvider>
+      </div>
     </div>
   );
 }
