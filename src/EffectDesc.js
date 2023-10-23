@@ -1,11 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { ThemeProvider } from "./Themecontent";
 import ThemeDisplay from "./ThemeDisplay";
 import ThemeButton from "./ThemeButton";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+
 function EffectDesc() {
   const [resourceType, setResourceType] = useState("posts");
   const [items, setItems] = useState([]);
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  function incre() {
+    dispatch({ type: "increment" });
+  }
+  function decre() {
+    dispatch({ type: "decrement" });
+  }
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/${resourceType}`)
       .then((response) => response.json())
@@ -30,6 +49,11 @@ function EffectDesc() {
             <ThemeDisplay />
           </div>
         </ThemeProvider>
+      </div>
+      <div>
+        <button onClick={incre}>Inc</button>
+        <span>{state.count}</span>
+        <button onClick={decre}>Dec</button>
       </div>
     </div>
   );
